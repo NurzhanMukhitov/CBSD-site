@@ -21,6 +21,15 @@ export function useScrollSpy(sectionIds: string[], offset = 76) {
         }
       });
 
+      // Если проскроллили практически до самого низа страницы,
+      // явно считаем активным последний раздел ("Контакты").
+      const doc = document.documentElement;
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const docHeight = doc.scrollHeight;
+      if (docHeight - scrollBottom <= 2 && sectionIds.length > 0) {
+        bestId = sectionIds[sectionIds.length - 1];
+      }
+
       setActiveId(bestId);
     }
 
